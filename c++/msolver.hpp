@@ -10,6 +10,11 @@ class matrix_solver {
     arma::vec b_tilde, c_tilde, g_tilde;
     arma::vec v_vec, x_vec, u_vec;
 
+
+    //Setting up matrix
+    arma::mat A, P, L, U;
+
+
     //error
     double epsilon, epsilon_max;
 
@@ -47,6 +52,7 @@ class matrix_solver {
       c_tilde = arma::vec(n,arma::fill::zeros);
       g_tilde = arma::vec(n,arma::fill::zeros);
 
+
     }
 
     //overload function
@@ -77,6 +83,7 @@ public:
 
   void write_stats(std::string filename_);
 
+  void LU_decomp(int a_, int b_, int c_, std::string filename_);
 
   //setting up the overload
   matrix_solver(int n_){

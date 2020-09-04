@@ -123,3 +123,48 @@ double matrix_solver::ret_h(){
 double matrix_solver::ret_runtime(){
   return runtime;
 }
+
+void matrix_solver::LU_decomp(int a_, int b_, int c_, std::string filename_){
+  a = a_; b = b_; c = c_;
+  A = arma::mat(n,n,arma::fill::zeros);
+  P = arma::mat(n,n,arma::fill::zeros);
+  L = arma::mat(n,n,arma::fill::zeros);
+  U = arma::mat(n,n,arma::fill::zeros);
+
+
+  for(int i=0;i<n;i++){
+    if (i!=0){
+        A(i,i-1) = a;
+      }
+    A(i,i) = b;
+    if(i!=n-1){
+        A(i,i+1) = c;
+      }
+    }
+    //Starting clock
+    runtime = 0;
+    start = clock();
+
+    arma::lu(L,U,P,A);
+    arma::vec b_LU;
+    b_LU = arma::solve(trimatu(U), arma::solve(trimatl(L), P*g_vec));
+
+    //ending clock and adding to runtime
+    finish = clock();
+    runtime += ( (finish - start)*1./CLOCKS_PER_SEC );
+
+    for(int i=1;i<n+1;i++){
+      v_vec(i) = b_LU(i-1);
+    }
+
+
+    filename = filename_;
+    std::ofstream outfile (filename);
+
+    outfile << "| x | v | u | CPU-time:" << runtime << std::endl;
+    for(int i=0;i<n+2;i++){
+      outfile << x_vec(i) << " " << v_vec(i) << " " << u_vec(i) << "\n";
+    }
+    outfile.close();
+    runtime = 0;
+}

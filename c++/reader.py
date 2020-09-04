@@ -84,3 +84,25 @@ for filename in filenames_2:
     if argv == "save":
         plt.savefig("./figures/1d_{:}_eps.png".format(type[0:3]))
     plt.clf()
+
+filenames = ["./data/LU10.txt","./data/LU100.txt","./data/LU1000.txt"]
+
+for filename in filenames:
+    infile = open(filename,"r")
+    first_line = infile.readline().split()
+    x = []; u = []; v = []
+    for i in infile:
+        line = i.split()
+        x.append(eval(line[0]))
+        v.append(eval(line[1]))
+        u.append(eval(line[2]))
+    cpu_time = eval(first_line[-1][9:])
+
+    plt.plot(x,v,label="Numerical")
+    plt.plot(x,u,label="Analytic")
+    plt.xlabel("x")
+    plt.ylabel("u(x)")
+    plt.grid()
+    plt.legend()
+    plt.savefig("./figures/LU{:}.png".format(len(x)-2))
+    plt.clf()

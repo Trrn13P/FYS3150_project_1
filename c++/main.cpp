@@ -77,5 +77,9 @@ std::string filename;
   filename = "./data/gen_stats.txt";
   write_stats(filename,1,7,"general", a, b, c);
 
-  delete [] a; delete [] b; delete [] c;
+  for(int i=0;i<3;i++){
+    filename = "./data/LU" + std::to_string(n[i]) + ".txt";
+    matrix_solver run_(n[i]);
+    run_.LU_decomp(a,b,c,filename);
+  }
 }
