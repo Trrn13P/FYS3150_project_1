@@ -1,5 +1,5 @@
 # Projekt_1_3150
 
-Running the makefile will create the folders "figures" and "data".
+The python folder is not used in this project, only the c++ folder. The make file is in the c++ folder. 
 
-The python folder is not used in the project.
+Running the makefile will create the folders "figures" and "data". These will include all relevant data and plots.
