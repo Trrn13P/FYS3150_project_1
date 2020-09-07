@@ -33,7 +33,7 @@ class matrix_solver {
       x_vec = arma::linspace(0,1,n+2);
       v_vec = arma::vec(n+2,arma::fill::zeros);
       u_vec = arma::vec(n+2,arma::fill::zeros);
-
+      
       g_vec = arma::vec(n,arma::fill::zeros);
 
       //filling in values for g(x)

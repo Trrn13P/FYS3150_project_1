@@ -65,8 +65,12 @@ for filename in filenames_1:
         plt.savefig("./figures/1b_{:}_{:}.png".format(type[0:3],N))
     plt.clf()
 
+n_algos = []
+cpu_time_algos = []
 for filename in filenames_2:
     N, epsilon_max, log_10_h, cpu_time = read_file(filename)
+    cpu_time_algos.append(cpu_time)
+    n_algos.append(N)
     plt.xlabel(r"$log_{10}(h)$")
     plt.ylabel(r"$\varepsilon$")
     plt.plot(log_10_h,epsilon_max)
@@ -86,7 +90,7 @@ for filename in filenames_2:
     plt.clf()
 
 filenames = ["./data/LU10.txt","./data/LU100.txt","./data/LU1000.txt"]
-
+cpu_time_LU = []
 for filename in filenames:
     infile = open(filename,"r")
     first_line = infile.readline().split()
@@ -96,7 +100,7 @@ for filename in filenames:
         x.append(eval(line[0]))
         v.append(eval(line[1]))
         u.append(eval(line[2]))
-    cpu_time = eval(first_line[-1][9:])
+    cpu_time_LU.append(eval(first_line[-1][9:]))
 
     plt.plot(x,v,label="Numerical, n= {:}".format(filename[9:11]))
     plt.plot(x,u,label="Analytic")
@@ -106,3 +110,21 @@ for filename in filenames:
     plt.legend()
     plt.savefig("./figures/LU{:}.png".format(len(x)-2))
     plt.clf()
+
+n = []
+for i in range(1,8):
+    n.append(int(i))
+cpu_time_gen = np.log10(cpu_time_algos[0])
+cpu_time_spe = np.log10(cpu_time_algos[1])
+cpu_time_LU = np.log10(cpu_time_LU)
+
+plt.plot(n,cpu_time_gen,label="General solution")
+plt.plot(n,cpu_time_spe,label="Specialized solution")
+plt.plot(n[0:3],cpu_time_LU,label="LU-decomposition")
+
+plt.xlabel("n")
+plt.ylabel(r"$log_10$(CPU-time) [s]")
+plt.xticks(ticks = n,labels=[r"$10^1$",r"$10^2$",r"$10^3$",r"$10^4$",r"$10^5$",r"$10^6$",r"$10^7$"])
+plt.legend()
+plt.savefig("./figures/CPU_times")
+plt.clf()

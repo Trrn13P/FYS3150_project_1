@@ -54,6 +54,7 @@ void matrix_solver::forward_solver_general(){
   runtime += ( (finish - start)*1./CLOCKS_PER_SEC );
 }
 
+//Specialized forward solver
 void matrix_solver::forward_solver_specialized(){
   //Setting inital values for the tilde vectors
   b_tilde(0) = b_vec(0); c_tilde(0) = c_vec(0); g_tilde(0) = g_vec(0);
