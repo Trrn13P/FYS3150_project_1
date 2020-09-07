@@ -48,7 +48,7 @@ filenames_2 = ["./data/gen_stats.txt","./data/spe_stats.txt"]
 for filename in filenames_1:
     x,v,u,FLOPS,N,epsilon_max,epsilon_tot,cpu_time,log_10_h = read_file(filename)
     plt.xlabel("x")
-    plt.ylabel("u")
+    plt.ylabel("u(x), v(x)")
 
     plt.plot(x,v,label=r"Numerical solution, $n={:}$ steps".format(N))
     plt.plot(x,u,label="Analytic solution")
@@ -56,7 +56,7 @@ for filename in filenames_1:
         type = "Special algo"
     if filename[7:10] == "gen":
         type = "General algo"
-    plt.title(r"{:} $FLOPS={:}$".format(type,FLOPS))
+    #plt.title(r"{:} $FLOPS={:}$".format(type,FLOPS))
     plt.legend() ; plt.grid()
     argv = "save"
     if argv == "plot":
@@ -98,10 +98,10 @@ for filename in filenames:
         u.append(eval(line[2]))
     cpu_time = eval(first_line[-1][9:])
 
-    plt.plot(x,v,label="Numerical")
+    plt.plot(x,v,label="Numerical, n= {:}".format(filename[9:11]))
     plt.plot(x,u,label="Analytic")
     plt.xlabel("x")
-    plt.ylabel("u(x)")
+    plt.ylabel("u(x), v(x)")
     plt.grid()
     plt.legend()
     plt.savefig("./figures/LU{:}.png".format(len(x)-2))
